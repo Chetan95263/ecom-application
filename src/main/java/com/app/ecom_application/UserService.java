@@ -4,21 +4,33 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class UserService {
-    private List<User> userList = new ArrayList<>();
+    private final List<User> userList = new ArrayList<>();
     private Long currentId = 1L;
-    public User fetchUser(Long id){
+    public Optional<User> fetchUser(Long id){
         return userList.stream()
                 .filter(user -> user.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
     public void addUser(User user) {
         user.setId(currentId++);
         userList.add(user);
+    }
+    public List<User> fetchAllUser(){
+        return userList;
+    }
+    public boolean updateUser(Long id , User updatedUser) {
+        return userList.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .map(existedUser -> {
+                    existedUser.setFirstName(updatedUser.getFirstName());
+                    existedUser.setLastName(updatedUser.getLastName());
+                    return true;
+                }).orElse(false);
     }
 
 }
