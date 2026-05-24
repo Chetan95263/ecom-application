@@ -1,22 +1,22 @@
-package com.app.ecom_application;
+package com.app.ecom_application.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Data
-@Entity(name = "user_table")
-public class User {
+@NoArgsConstructor
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private  UserRole role = UserRole.CUSTOMER;
-
-    
+    private String street;
+    private String city;
+    private String state;
+    private String country;
+    private String zipcode;
 }

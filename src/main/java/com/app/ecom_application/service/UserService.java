@@ -1,5 +1,7 @@
-package com.app.ecom_application;
+package com.app.ecom_application.service;
 
+import com.app.ecom_application.model.User;
+import com.app.ecom_application.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
