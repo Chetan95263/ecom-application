@@ -7,7 +7,9 @@ import com.app.ecom_application.repository.ProductRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,26 @@ public class ProductService {
                     return mapToProductResponse(savedProduct);
                 });
     }
-
+    public List<ProductResponse> getAllProducts() {
+        return productRepo.findByActiveTrue()
+                .stream()
+                .map(this::mapToProductResponse)
+                .collect(Collectors.toList());
+    }
+    public boolean deleteProduct(Long id) {
+        return productRepo.findById(id)
+                .map(existedProduct -> {
+                    existedProduct.setActive(false);
+                    productRepo.save(existedProduct);
+                    return true;
+                }).orElse(false);
+    }
+    public List<ProductResponse> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword)
+                .stream()
+                .map(this:: mapToProductResponse)
+                .collect(Collectors.toList());
+    }
     private ProductResponse mapToProductResponse(Product savedProduct) {
         ProductResponse productResponse = new ProductResponse();
         productResponse.setId(savedProduct.getId());
@@ -49,5 +70,7 @@ public class ProductService {
         product.setImageUrl(productRequest.getImageUrl());
         product.setStockQuantity(productRequest.getStockQuantity());
     }
+
+
 
 }
