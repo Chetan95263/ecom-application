@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,4 +64,9 @@ public class CartService {
         return false;
     }
 
+    public List<CartItem> getCart(String userId) {
+        return userRepo.findById(Long.valueOf(userId))
+                .map(cartItemRepo::findByUser)
+                .orElseGet(List::of);
+    }
 }
