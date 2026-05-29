@@ -11,4 +11,19 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,beans,info
+  endpoint:
+    health:
+      show-details: always
+    info:
+      env:
+        enabled: true
+info:
+  app:
+    name: MyEcomApp
+    description: App built by Chetan Kumar
+    version: 1.0.0
